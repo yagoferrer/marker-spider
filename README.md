@@ -28,7 +28,7 @@ See the "demo map":http://jawj.github.com/OverlappingMarkerSpiderfier/demo.html 
 
 Download "the compiled, minified JS source":http://jawj.github.com/OverlappingMarkerSpiderfier/bin/oms.min.js.
 
-*Please note: version 0.3 introduces a breaking change. The @willSpiderfy(marker)@ and @markersThatWillAndWontSpiderfy()@ methods have been replaced with the (similar, but different) @markersNearMarker(marker)@ and @markersNearAnyOtherMarker()@ methods.*
+*Please note: version 0.3 introduces a breaking change. The `willSpiderfy(marker)` and `markersThatWillAndWontSpiderfy()` methods have been replaced with the (similar, but different) `markersNearMarker(marker)` and `markersNearAnyOtherMarker()` methods.*
 
 ## How to use
 
@@ -45,13 +45,13 @@ var map = new gm.Map(document.getElementById('map_canvas'), {
 });
 ```
 
-Create an @OverlappingMarkerSpiderfier@ instance:
+Create an `OverlappingMarkerSpiderfier` instance:
 
 ```javascript
 var oms = new OverlappingMarkerSpiderfier(map);
 ```
 
-Instead of adding click listeners to your markers directly via @google.maps.event.addListener@, add a global listener on the @OverlappingMarkerSpiderfier@ instance instead. The listener will be passed the clicked marker as its first argument, and the Google Maps @event@ object as its second.
+Instead of adding click listeners to your markers directly via `google.maps.event.addListener`, add a global listener on the `OverlappingMarkerSpiderfier` instance instead. The listener will be passed the clicked marker as its first argument, and the Google Maps `event` object as its second.
 
 ```javascript
 var iw = new gm.InfoWindow();
@@ -61,7 +61,7 @@ oms.addListener('click', function(marker, event) {
 });
 ```
   
-You can also add listeners on the @spiderfy@ and @unspiderfy@ events, which will be passed an array of the markers affected. In this example, we observe only the @spiderfy@ event, using it to close any open @InfoWindow@:
+You can also add listeners on the `spiderfy` and `unspiderfy` events, which will be passed an array of the markers affected. In this example, we observe only the `spiderfy` event, using it to close any open `InfoWindow`:
   
 ```javascript
 oms.addListener('spiderfy', function(markers) {
@@ -69,7 +69,7 @@ oms.addListener('spiderfy', function(markers) {
 });
 ```
 
-Finally, tell the @OverlappingMarkerSpiderfier@ instance about each marker as you add it, using the @addMarker@ method:
+Finally, tell the `OverlappingMarkerSpiderfier` instance about each marker as you add it, using the `addMarker` method:
 
 ```javascript
 for (var i = 0; i < window.mapData.length; i ++) {
@@ -89,7 +89,7 @@ for (var i = 0; i < window.mapData.length; i ++) {
 
 ### Loading
 
-The @google.maps@ object must be available when this code runs -- i.e. put the Google Maps API &lt;script&gt; tag before this one.
+The `google.maps` object must be available when this code runs -- i.e. put the Google Maps API &lt;script&gt; tag before this one.
 
 The Google Maps API code changes frequently. Some earlier versions had broken support for z-indices, and the 'frozen' versions appear not to be as frozen as you'd like. At this moment, the 'stable' version 3.7 seems to work well, but do test with whatever version you fix on.
 
@@ -98,35 +98,35 @@ The Google Maps API code changes frequently. Some earlier versions had broken su
 
 ```javascript
 new OverlappingMarkerSpiderfier(map, options)
-``
+```
 
-Creates an instance associated with @map@ (a @google.maps.Map@).
+Creates an instance associated with `map` (a `google.maps.Map`).
 
-The @options@ argument is an optional @Object@ specifying any options you want changed from their defaults. The available options are:
+The `options` argument is an optional `Object` specifying any options you want changed from their defaults. The available options are:
 
-*markersWontMove* and *markersWontHide* (defaults: @false@)
+*markersWontMove* and *markersWontHide* (defaults: `false`)
 
-By default, change events for each added marker's @position@ and @visibility@ are observed (so that, if a spiderfied marker is moved or hidden, all spiderfied markers are unspiderfied, and the new position is respected where applicable).
+By default, change events for each added marker's `position` and `visibility` are observed (so that, if a spiderfied marker is moved or hidden, all spiderfied markers are unspiderfied, and the new position is respected where applicable).
 
-However, if you know that you won't be moving and/or hiding any of the markers you add to this instance, you can save memory (a closure per marker in each case) by setting the options named @markersWontMove@ and/or @markersWontHide@ to @true@ (or anything "truthy":http://isolani.co.uk/blog/javascript/TruthyFalsyAndTypeCasting).
+However, if you know that you won't be moving and/or hiding any of the markers you add to this instance, you can save memory (a closure per marker in each case) by setting the options named `markersWontMove` and/or `markersWontHide` to `true` (or anything "truthy":http://isolani.co.uk/blog/javascript/TruthyFalsyAndTypeCasting).
 
-For example, @var oms = new OverlappingMarkerSpiderfier(map, {markersWontMove: true, markersWontHide: true});@.
+For example, `var oms = new OverlappingMarkerSpiderfier(map, {markersWontMove: true, markersWontHide: true});`.
 
-*keepSpiderfied* (default: @false@)
+*keepSpiderfied* (default: `false`)
 
 By default, the OverlappingMarkerSpiderfier works like Google Earth, in that when you click a spiderfied marker, the markers unspiderfy before any other action takes place. 
 
-Since this can make it tricky for the user to work through a set of markers one by one, you can override this behaviour by setting the @keepSpiderfied@ option to @true@.
+Since this can make it tricky for the user to work through a set of markers one by one, you can override this behaviour by setting the `keepSpiderfied` option to `true`.
 
-*nearbyDistance* (default: @20@).
+*nearbyDistance* (default: `20`).
 
 This is the pixel radius within which a marker is considered to be overlapping a clicked marker.
 
-*circleSpiralSwitchover* (default: @9@)
+*circleSpiralSwitchover* (default: `9`)
 
-This is the lowest number of markers that will be fanned out into a spiral instead of a circle. Set this to @0@ to always get spirals, or @Infinity@ for all circles.
+This is the lowest number of markers that will be fanned out into a spiral instead of a circle. Set this to `0` to always get spirals, or `Infinity` for all circles.
 
-*legWeight* (default: @1.5@) 
+*legWeight* (default: `1.5`) 
 
 This determines the thickness of the lines joining spiderfied markers to their original locations. 
 
@@ -136,17 +136,17 @@ Note: methods that have no obvious return value return the OverlappingMarkerSpid
 
 *addMarker(marker)*
 
-Adds @marker@ (a @google.maps.Marker@) to be tracked.
+Adds `marker` (a `google.maps.Marker`) to be tracked.
 
 *removeMarker(marker)*
 
-Removes @marker@ from those being tracked. This _does not_ remove the marker from the map (to remove a marker from the map you must call @setMap(null)@ on it, as per usual).
+Removes `marker` from those being tracked. This _does not_ remove the marker from the map (to remove a marker from the map you must call `setMap(null)` on it, as per usual).
 
 *clearMarkers()*
 
-Removes every @marker@ from being tracked. Much quicker than calling @removeMarker@ in a loop, since that has to search the markers array every time.
+Removes every `marker` from being tracked. Much quicker than calling `removeMarker` in a loop, since that has to search the markers array every time.
 
-This _does not_ remove the markers from the map (to remove the markers from the map you must call @setMap(null)@ on each of them, as per usual).
+This _does not_ remove the markers from the map (to remove the markers from the map you must call `setMap(null)` on each of them, as per usual).
 
 *getMarkers()*
 
@@ -159,11 +159,11 @@ Returns an array of all the markers that are currently being tracked. This is a 
 
 Adds a listener to react to one of three events.
 
-@event@ may be @'click'@, @'spiderfy'@ or @'unspiderfy'@.
+`event` may be `'click'`, `'spiderfy'` or `'unspiderfy'`.
 
-For @'click'@ events, @listenerFunc@ receives one argument: the clicked marker object. You'll probably want to use this listener to do something like show a @google.maps.InfoWindow@.
+For `'click'` events, `listenerFunc` receives one argument: the clicked marker object. You'll probably want to use this listener to do something like show a `google.maps.InfoWindow`.
 
-For @'spiderfy'@ or @'unspiderfy'@ events, @listenerFunc@ receives two arguments: first, an array of the markers that were spiderfied or unspiderfied; second, an array of the markers that were not. One use for these listeners is to make some distinction between spiderfied and non-spiderfied markers when some markers are spiderfied -- e.g. highlighting those that are spiderfied, or dimming out those that aren't.
+For `'spiderfy'` or `'unspiderfy'` events, `listenerFunc` receives two arguments: first, an array of the markers that were spiderfied or unspiderfied; second, an array of the markers that were not. One use for these listeners is to make some distinction between spiderfied and non-spiderfied markers when some markers are spiderfied -- e.g. highlighting those that are spiderfied, or dimming out those that aren't.
 
 *removeListener(event, listenerFunc)*
 
@@ -182,23 +182,23 @@ Returns any spiderfied markers to their original positions, and triggers any lis
 
 *markersNearMarker(marker, firstOnly)*
 
-Returns an array of markers within @nearbyDistance@ pixels of @marker@ -- i.e. those that will be spiderfied when @marker@ is clicked. If you pass @true@ as the second argument, the search will stop when a single marker has been found. This is more efficient if all you want to know is whether there are any nearby markers.
+Returns an array of markers within `nearbyDistance` pixels of `marker` -- i.e. those that will be spiderfied when `marker` is clicked. If you pass `true` as the second argument, the search will stop when a single marker has been found. This is more efficient if all you want to know is whether there are any nearby markers.
 
 _Don't_ call this method in a loop over all your markers, since this can take a _very_ long time.
 
-The return value of this method may change any time the zoom level changes, and when any marker is added, moved, hidden or removed. Hence you'll very likely want call it (and take appropriate action) every time the map's @zoom_changed@ event fires _and_ any time you add, move, hide or remove a marker.
+The return value of this method may change any time the zoom level changes, and when any marker is added, moved, hidden or removed. Hence you'll very likely want call it (and take appropriate action) every time the map's `zoom_changed` event fires _and_ any time you add, move, hide or remove a marker.
 
-Note also that this method relies on the map's @Projection@ object being available, and thus cannot be called until the map's first @idle@ event fires.
+Note also that this method relies on the map's `Projection` object being available, and thus cannot be called until the map's first `idle` event fires.
 
 *markersNearAnyOtherMarker()*
 
 Returns an array of all markers that are near one or more other markers -- i.e. those will be spiderfied when clicked.
 
-This method is several orders of magnitude faster than looping over all markers calling @markersNearMarker@ (primarily because it only does the expensive business of converting lat/lons to pixel coordinates once per marker).
+This method is several orders of magnitude faster than looping over all markers calling `markersNearMarker` (primarily because it only does the expensive business of converting lat/lons to pixel coordinates once per marker).
 
-The return value of this method may change any time the zoom level changes, and when any marker is added, moved, hidden or removed. Hence you'll very likely want call it (and take appropriate action) every time the map's @zoom_changed@ event fires _and_ any time you add, move, hide or remove a marker.
+The return value of this method may change any time the zoom level changes, and when any marker is added, moved, hidden or removed. Hence you'll very likely want call it (and take appropriate action) every time the map's `zoom_changed` event fires _and_ any time you add, move, hide or remove a marker.
 
-Note also that this method relies on the map's @Projection@ object being available, and thus cannot be called until the map's first @idle@ event fires.
+Note also that this method relies on the map's `Projection` object being available, and thus cannot be called until the map's first `idle` event fires.
 
 
 ### Properties
@@ -207,7 +207,7 @@ You can set the following properties on an OverlappingMarkerSpiderfier instance:
 
 *legColors.usual[mapType]* and *legColors.highlighted[mapType]*
 
-These determine the usual and highlighted colours of the lines, where @mapType@ is one of the @google.maps.MapTypeId@ constants ("or a custom map type ID":https://github.com/jawj/OverlappingMarkerSpiderfier/issues/4). 
+These determine the usual and highlighted colours of the lines, where `mapType` is one of the `google.maps.MapTypeId` constants ("or a custom map type ID":https://github.com/jawj/OverlappingMarkerSpiderfier/issues/4). 
 
 The defaults are as follows:
 
@@ -218,21 +218,17 @@ legColors.usual[mti.TERRAIN] = legColors.usual[mti.ROADMAP] = '#444';
 legColors.highlighted[mti.HYBRID] = legColors.highlighted[mti.SATELLITE] = 
 legColors.highlighted[mti.TERRAIN] = legColors.highlighted[mti.ROADMAP] = '#f00';
 ```
-You can also get and set any of the options noted in the constructor function documentation above as properties on an OverlappingMarkerSpiderfier instance. However, for some of these options (e.g. @markersWontMove@) modifications won't be applied retroactively.
+You can also get and set any of the options noted in the constructor function documentation above as properties on an OverlappingMarkerSpiderfier instance. However, for some of these options (e.g. `markersWontMove`) modifications won't be applied retroactively.
 
 ## How to build
 
 ```bash
 npm install
-npm install -g bower
-bower install
-npm install -g gulp
-gulp
-`
+npm dist
+````
 
 ## Licence
 
 This software is released under the "MIT licence":http://www.opensource.org/licenses/mit-license.php.
 
 Finally, if you want to say thanks, I am on "Gittip":https://www.gittip.com/jawj.
-U
