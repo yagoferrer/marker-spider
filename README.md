@@ -1,4 +1,4 @@
-h1. Overlapping Marker Spiderfier for Google Maps API v3
+## Overlapping Marker Spiderfier for Google Maps
 
 *Ever noticed how, in "Google Earth":http://earth.google.com, marker pins that overlap each other spring apart gracefully when you click them, so you can pick the one you meant?*
 
@@ -12,7 +12,7 @@ I wrote it as part of the data download feature for "Mappiness":http://www.mappi
 
 *There's now also "a port for the Leaflet maps API":https://github.com/jawj/OverlappingMarkerSpiderfier-Leaflet.*
 
-h3. Doesn't clustering solve this problem?
+## Doesn't clustering solve this problem?
 
 You may have seen the "marker clustering library":http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/docs/reference.html, which also helps deal with markers that are close together.
 
@@ -20,50 +20,59 @@ That might be what you want. However, it probably *isn't* what you want (or isn'
 
 (I'm told that the OverlappingMarkerSpiderfier also plays nice with clustering -- i.e. once you get down to a zoom level where individual markers are shown, these markers then spiderfy happily -- but I haven't yet tried it myself).
 
-h2. Demo
+### Demo
 
 See the "demo map":http://jawj.github.com/OverlappingMarkerSpiderfier/demo.html (the data is random: reload the map to reposition the markers).
 
-h2. Download
+## Download
 
 Download "the compiled, minified JS source":http://jawj.github.com/OverlappingMarkerSpiderfier/bin/oms.min.js.
 
 *Please note: version 0.3 introduces a breaking change. The @willSpiderfy(marker)@ and @markersThatWillAndWontSpiderfy()@ methods have been replaced with the (similar, but different) @markersNearMarker(marker)@ and @markersNearAnyOtherMarker()@ methods.*
 
-h2. How to use
+## How to use
 
 See the "demo map source":https://github.com/jawj/OverlappingMarkerSpiderfier/blob/gh-pages/demo.html, or follow along here for a slightly simpler usage with commentary.
 
 Create your map like normal:
 
-bc. var gm = google.maps;
+```javascript
+var gm = google.maps;
 var map = new gm.Map(document.getElementById('map_canvas'), {
   mapTypeId: gm.MapTypeId.SATELLITE,
   center: new gm.LatLng(50, 0), 
   zoom: 6
 });
+```
 
 Create an @OverlappingMarkerSpiderfier@ instance:
 
-bc. var oms = new OverlappingMarkerSpiderfier(map);
+```javascript
+var oms = new OverlappingMarkerSpiderfier(map);
+```
 
 Instead of adding click listeners to your markers directly via @google.maps.event.addListener@, add a global listener on the @OverlappingMarkerSpiderfier@ instance instead. The listener will be passed the clicked marker as its first argument, and the Google Maps @event@ object as its second.
 
-bc. var iw = new gm.InfoWindow();
+```javascript
+var iw = new gm.InfoWindow();
 oms.addListener('click', function(marker, event) {
   iw.setContent(marker.desc);
   iw.open(map, marker);
 });
+```
   
 You can also add listeners on the @spiderfy@ and @unspiderfy@ events, which will be passed an array of the markers affected. In this example, we observe only the @spiderfy@ event, using it to close any open @InfoWindow@:
   
-bc. oms.addListener('spiderfy', function(markers) {
+```javascript
+oms.addListener('spiderfy', function(markers) {
   iw.close();
 });
+```
 
 Finally, tell the @OverlappingMarkerSpiderfier@ instance about each marker as you add it, using the @addMarker@ method:
 
-bc. for (var i = 0; i < window.mapData.length; i ++) {
+```javascript
+for (var i = 0; i < window.mapData.length; i ++) {
   var datum = window.mapData[i];
   var loc = new gm.LatLng(datum.lat, datum.lon);
   var marker = new gm.Marker({
@@ -74,19 +83,22 @@ bc. for (var i = 0; i < window.mapData.length; i ++) {
   marker.desc = datum.d;
   oms.addMarker(marker);  // <-- here
 }
+```
 
-h2. Docs
+## Docs
 
-h3. Loading
+### Loading
 
 The @google.maps@ object must be available when this code runs -- i.e. put the Google Maps API &lt;script&gt; tag before this one.
 
 The Google Maps API code changes frequently. Some earlier versions had broken support for z-indices, and the 'frozen' versions appear not to be as frozen as you'd like. At this moment, the 'stable' version 3.7 seems to work well, but do test with whatever version you fix on.
 
 
-h3. Construction
+### Construction
 
-bc. new OverlappingMarkerSpiderfier(map, options)
+```javascript
+new OverlappingMarkerSpiderfier(map, options)
+``
 
 Creates an instance associated with @map@ (a @google.maps.Map@).
 
@@ -118,7 +130,7 @@ This is the lowest number of markers that will be fanned out into a spiral inste
 
 This determines the thickness of the lines joining spiderfied markers to their original locations. 
 
-h3. Instance methods: managing markers
+### Instance methods: managing markers
 
 Note: methods that have no obvious return value return the OverlappingMarkerSpiderfier instance they were called on, in case you want to chain method calls.
 
@@ -141,7 +153,7 @@ This _does not_ remove the markers from the map (to remove the markers from the 
 Returns an array of all the markers that are currently being tracked. This is a copy of the one used internally, so you can do what you like with it.
 
 
-h3. Instance methods: managing listeners
+### Instance methods: managing listeners
 
 *addListener(event, listenerFunc)*
 
@@ -166,7 +178,7 @@ Removes all listeners on the specified event.
 Returns any spiderfied markers to their original positions, and triggers any listeners you may have set for this event. Unless no markers are spiderfied, in which case it does nothing.
 
 
-h3. Instance methods: advanced use only!
+### Instance methods: advanced use only!
 
 *markersNearMarker(marker, firstOnly)*
 
@@ -189,7 +201,7 @@ The return value of this method may change any time the zoom level changes, and 
 Note also that this method relies on the map's @Projection@ object being available, and thus cannot be called until the map's first @idle@ event fires.
 
 
-h3. Properties
+### Properties
 
 You can set the following properties on an OverlappingMarkerSpiderfier instance:
 
@@ -199,24 +211,28 @@ These determine the usual and highlighted colours of the lines, where @mapType@ 
 
 The defaults are as follows:
 
-bc. var mti = google.maps.MapTypeId;
+```javascript
+var mti = google.maps.MapTypeId;
 legColors.usual[mti.HYBRID] = legColors.usual[mti.SATELLITE] = '#fff';
 legColors.usual[mti.TERRAIN] = legColors.usual[mti.ROADMAP] = '#444';
 legColors.highlighted[mti.HYBRID] = legColors.highlighted[mti.SATELLITE] = 
-  legColors.highlighted[mti.TERRAIN] = legColors.highlighted[mti.ROADMAP] = '#f00';
-
+legColors.highlighted[mti.TERRAIN] = legColors.highlighted[mti.ROADMAP] = '#f00';
+```
 You can also get and set any of the options noted in the constructor function documentation above as properties on an OverlappingMarkerSpiderfier instance. However, for some of these options (e.g. @markersWontMove@) modifications won't be applied retroactively.
 
-h1. How to build
+## How to build
 
-bc. npm install
+```bash
+npm install
 npm install -g bower
 bower install
 npm install -g gulp
 gulp
+`
 
-h2. Licence
+## Licence
 
 This software is released under the "MIT licence":http://www.opensource.org/licenses/mit-license.php.
 
 Finally, if you want to say thanks, I am on "Gittip":https://www.gittip.com/jawj.
+U
