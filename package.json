@@ -4,7 +4,7 @@
   "description": "Deals with overlapping markers in Google Maps JS API v3, Google Earth-style",
   "main": "index.js",
   "scripts": {
-    "postinstall": "./node_modules/.bin/bower install",
+    "predist": "./node_modules/.bin/bower install",
     "dist": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
