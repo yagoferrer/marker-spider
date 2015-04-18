@@ -1,16 +1,16 @@
 ## About me
 
-With permission of the original Author: I'm starting a rewrite of "Overlapping Marker Spiderfier"
+As a suggestion of the original Author. I cloned the project *Overlapping Marker Spiderfier* and I started my own rewrite.
 
-## Overlapping Marker Spiderfier for Google Maps
+## markerSpider for Google Maps
 
-*Ever noticed how, in "Google Earth":http://earth.google.com, marker pins that overlap each other spring apart gracefully when you click them, so you can pick the one you meant?*
+*Ever noticed how, in [Google Earth](http://earth.google.com), marker pins that overlap each other spring apart gracefully when you click them, so you can pick the one you meant?*
 
-*And ever noticed how, when using the "Google Maps API":http://code.google.com/apis/maps/documentation/javascript/, the same thing doesn't happen?*
+*And ever noticed how, when using the [Google Maps API](http://code.google.com/apis/maps/documentation/javascript/), the same thing doesn't happen?*
 
 This code makes Google Maps API *version 3* map markers behave in that Google Earth way (minus the animation). Small numbers of markers (yes, up to 8) spiderfy into a circle. Larger numbers fan out into a more space-efficient spiral.
 
-The compiled code has no dependencies beyond Google Maps. And it's under 3K when compiled out of "CoffeeScript":http://jashkenas.github.com/coffee-script/, minified with Google's "Closure Compiler":http://code.google.com/closure/compiler/ and gzipped.
+The compiled code has no dependencies beyond Google Maps. And it's under 3K when compiled out of [CoffeeScript](http://jashkenas.github.com/coffee-script/), minified with Google's [Closure Compiler](http://code.google.com/closure/compiler/) and gzipped.
 
 I wrote it as part of the data download feature for "Mappiness":http://www.mappiness.org.uk/maps/.
 
@@ -18,7 +18,7 @@ I wrote it as part of the data download feature for "Mappiness":http://www.mappi
 
 ## Doesn't clustering solve this problem?
 
-You may have seen the "marker clustering library":http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/docs/reference.html, which also helps deal with markers that are close together.
+You may have seen the [marker clustering library](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/docs/reference.html), which also helps deal with markers that are close together.
 
 That might be what you want. However, it probably *isn't* what you want (or isn't the only thing you want) if you have markers that could be in the exact same location, or close enough to overlap even at the maximum zoom level. In that case, clustering won't help your users see and/or click on the marker they're looking for.
 
