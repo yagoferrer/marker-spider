@@ -1,3 +1,7 @@
+## About me
+
+With permission of the original Author: I'm starting a rewrite of "Overlapping Marker Spiderfier"
+
 ## Overlapping Marker Spiderfier for Google Maps
 
 *Ever noticed how, in "Google Earth":http://earth.google.com, marker pins that overlap each other spring apart gracefully when you click them, so you can pick the one you meant?*
