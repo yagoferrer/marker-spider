@@ -19,6 +19,6 @@ gulp.task('default', function() {
         warning_level: 'QUIET'
       }
     }))
-    .pipe(gulp.dest('.'))
+    .pipe(gulp.dest('./dist'))
 
 });
